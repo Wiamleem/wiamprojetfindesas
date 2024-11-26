@@ -1,0 +1,179 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+	typedef struct{
+		int jour;
+		int mois;
+		int annee;
+		
+	}date_decheance;
+	
+typedef struct{
+	char titre[59];
+	char discription[100];
+	date_decheance date_dech;
+	int priorite;
+	}tache;
+	tache tch[5];
+	int taille=0;
+	int ajouteo=0;
+	void ajoute_priorite(){
+	int priorite;
+	do{
+		printf("enter priorite (1-high 2-low)");
+	    scanf("%d",&priorite);
+	    if(priorite!=1&&priorite!=2) printf("choix non valid");
+	}while(priorite!=1&&priorite!=2);
+	}
+
+	void ajoute(){
+		
+		printf("entrer le titre :\n");
+	    scanf("%s",tch[taille].titre);
+		printf("entrer la discription :\n");
+		scanf("%s",tch[taille].discription);
+	  ajoute_priorite();
+       printf("la tache ajoute avec succes \n");
+       do{
+       	printf("entrer le jour : \n");
+       scanf("%d",&tch[taille].date_dech.jour);
+       if(tch[taille].date_dech.jour>0 && tch[taille].date_dech.jour<=31){
+       	printf("jour est valide \n");
+	   }else{
+	   	printf("jour non valider \n");
+	   }
+       	
+	   }while(tch[taille].date_dech.jour<0 || tch[taille].date_dech.jour>=31);
+       
+       do{
+       	printf("entrer le mois :\n");
+       scanf("%d",&tch[taille].date_dech.mois);
+       if(tch[taille].date_dech.mois>0 && tch[taille].date_dech.mois<=12){
+	   
+       printf("mois est valid \n");
+    
+       }else{
+       	printf("mois non valider \n");
+	   }
+       	
+       
+	   }while(tch[taille].date_dech.mois<0 || tch[taille].date_dech.mois>=12);
+       printf("entrer annee :\n");
+       scanf("%d",&tch[taille].date_dech.annee);
+       taille++;
+       
+       ajouteo=1;
+       
+    
+
+}
+    void affiche(){
+    	int i;
+    	for(i=0;i<taille;i++){
+    		printf("le titre est : %s\n",tch[i].titre);
+    		printf("la discription est: %s\n",tch[i].discription);
+    		printf("la priorite est : %s\n",tch[i].priorite==1?"low":"high");
+    		printf("le jour est :%d \n",tch[i].date_dech.jour);
+    		printf("le mois est :%d \n",tch[i].date_dech.mois);
+    		printf("l annee est %d \n",tch[i].date_dech.annee);
+    		
+		}
+	}
+	void modifier(){
+		int indice;
+		printf("entrer indice :");
+		scanf("%d",&indice);
+		if(indice<0 || indice>taille){
+			printf("indice introuvable");
+		}else{
+			printf("entrer noveau titre acuel(%s)",tch[indice].titre);
+			scanf("%s",tch[indice].titre);
+			printf("entrer nouvelle discription acuel(%s)",tch[indice].discription);
+			scanf("%s",tch[indice].discription);
+			printf("entrer la nouvelle priorite acuel(%d)",tch[indice].priorite);
+			scanf("%d",&tch[indice].priorite);
+			printf("entrer noveau jour acuel(%d)",tch[indice].date_dech.jour);
+			scanf("%d",&tch[indice].date_dech.jour);
+			printf("entrer noveau mois acuel (%d)",tch[indice].date_dech.mois);
+			scanf("%d",&tch[indice].date_dech.mois);
+			printf("entrer la nouvelle annee (%d)",tch[indice].date_dech.annee);
+			scanf("%d",&tch[indice].date_dech.annee);
+			
+		}
+	
+	 
+		
+		
+	}
+	void supprimer(){
+		int indice,i;
+		printf("entrer indice qui tu veux supprimer \n");
+		scanf("%d",&indice);
+		if(indice<0 || indice>=taille){
+			printf("l indice qui veux l entrer est introvable \n");		
+		}else	
+		for(i=indice;i<taille;i++);
+			tch[i]=tch[i+1];	
+			taille--;
+			
+	}
+	void filtrer(){
+		int p,i;
+		printf("entrer la priorite voullait afficher (1-low 2-high)");
+		scanf("%d",&p);
+		for(i=0;i<taille;i++){
+			if(p==0 || p!=1 && p!=2){
+			
+			printf("aucune tache a afficher");
+		}else if (p==1){
+					printf("les taches avec low priorite : \n %s \n %s \n ",tch[i].titre,tch[i].discription);
+			}else{
+					printf("les taches avec high priorite : \n %s \n %s \n ",tch[i].titre,tch[i].discription);
+			}
+	
+		}
+		
+		}
+	
+	
+    
+	int main(int argc, char** argv) {
+
+	int action,indice;
+	printf("\n\n\t\t\t\t\t\t\t\t Application de gestion tache  \n\n\n");
+	do{
+		
+		printf("1-Ajouter une tache \n\n");
+		printf("2-Afficher une tache \n\n");
+		printf("3-Modifier une tache \n\n");
+		printf("4-supprimer une tache \n\n");
+		printf("5-filtrer une tache \n\n");
+		printf("Enter votre choix : ");
+		scanf("%d",&action);
+		if(action==1){
+			ajoute();
+		}else if(ajouteo==1){
+			
+	
+		switch (action){
+		
+		case 2:affiche();break;
+		case 3:modifier();break;
+		case 4:supprimer();break;
+		case 5:filtrer();break;
+		case 6:printf("au revoir"); break;
+		default:printf("choix non valid \n");
+		}
+			}else{
+				printf("vous devez selectionner 'ajouter'avant dacceder aux autre option\n");
+			}
+	}while(action!=6);
+	
+	return 0;
+	} 
+
+
+
+
+
